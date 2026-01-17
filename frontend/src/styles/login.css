@@ -1,0 +1,143 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* removes scrolling */
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    background: rgba(26, 26, 26, 0.459);
+    align-items: center;
+    margin-top: 150px;
+    width: 520px;
+    padding-bottom: 30px;
+    border-radius: 15px;
+}
+
+
+.login-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 🔥 LOGIN PAGE GRADIENT */
+  background: linear-gradient(
+    135deg,
+    #1e3c72,
+    #2bb673,
+    #1c92b3
+  );
+
+  /* override index.css background */
+  background-attachment: fixed;
+}
+
+
+.login-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 25px;
+}
+
+
+
+.text{
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+}
+
+.underline{
+    width: 50px;
+    height: 5px;
+    background-color: #2bb673;
+    border-radius: 9px;
+}
+
+.inputs{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    width: 420px;             
+    height: 60px;
+    background-color: #eaeaea;
+    border-radius: 6px;
+}
+
+
+.icon{
+    margin: 0 20px;
+    color: #555;
+    font-size: 26px;
+}
+
+.input input{
+    height: 40px;
+    width: 320px;                
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 17px;
+}
+
+.forgot-password{
+    width: 420px;          
+    margin: 15px auto 0;
+    text-align: left;      
+    color: #ffff;
+    font-size: 16px;
+}
+
+
+.forgot-password span{
+    color: #2bb673;
+    cursor: pointer;
+}
+
+.submit-container{
+    display: flex;
+    justify-content: space-between; 
+    width: 420px;                   
+    margin: 30px auto;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2bb673;
+    width: 190px;
+    height: 55px;
+    color: #000000;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+}
+
+.submit:hover{
+    background-color: #2bb673;
+    color: rgb(218, 218, 218);
+}
+
+.inactive{
+    background: #eaeaea;
+    color: #000000;
+}

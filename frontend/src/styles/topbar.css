@@ -1,0 +1,53 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;              
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;   
+
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+
+  font-size: 14px;
+  z-index: 1000;
+
+}
+
+.topbar-left{
+    display: flex;
+    gap: 12px;
+    margin-left: 20px
+}
+
+.topbar-center{
+    display: flex;
+    gap: 14px;
+}
+
+.topbar-right{
+    display: flex;
+    gap: 14px;
+    margin-right: 20px
+
+}
+
+.topbar a{
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.topbar-center{
+    color: #2bb673;
+}
+
+.topbar-right select {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+}
