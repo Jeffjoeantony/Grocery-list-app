@@ -1,22 +1,24 @@
 .navbar {
-    /* top: 0; */
-    /* left: 0; */
-  width: 100vw;
+  position: fixed;
+  top: 72px; /* MUST match header height */
+  left: 0;
+  width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
-  
+  z-index: 999;
 }
 
 .navbar-container {
-    width: 100%;
-    margin: auto;
-  padding: 12px 30px;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 12px 20px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 25px;
 }
+
 
 .category-deals{
     justify-content: space-between;

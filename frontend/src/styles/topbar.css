@@ -1,53 +1,59 @@
 .topbar {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100vw;              
-  height: 40px;
+  width: 100%;
+  background: #f8f8f8;
+  border-bottom: 1px solid #eee;
+  z-index: 1100;
+  font-size: 13px;
+}
 
-  display: flex;
+.topbar-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 6px 20px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;   
-
-  background-color: #fff;
-  border-bottom: 1px solid #e5e5e5;
-
-  font-size: 14px;
-  z-index: 1000;
-
 }
 
-.topbar-left{
-    display: flex;
-    gap: 12px;
-    margin-left: 20px
+/* LEFT */
+.topbar-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.topbar-center{
-    display: flex;
-    gap: 14px;
+/* CENTER */
+.topbar-center {
+  text-align: center;
+  color: #2bb673;
+  font-weight: 500;
 }
 
-.topbar-right{
-    display: flex;
-    gap: 14px;
-    margin-right: 20px
-
+/* RIGHT */
+.topbar-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.topbar a{
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
+/* LINKS */
+.topbar a {
+  text-decoration: none;
+  color: #333;
 }
 
-.topbar-center{
-    color: #2bb673;
+.topbar a:hover {
+  color: #2bb673;
 }
 
+/* DROPDOWNS */
 .topbar-right select {
   border: none;
   background: transparent;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
 }

@@ -10,34 +10,15 @@ const Login = () => {
   const [action, setAction] = useState("Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const navigate = useNavigate();
 
 
-  const handleSignup = async (email, password, name) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          name: name
-        }
-      }
-    });
-  
-    if (error) {
-      alert(error.message);
-      return;
-    }
-  
-    alert('Signup successful! Please verify email.');
-  };
-
-
-  const handleLogin = async () => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const handleSignup = async () => {
+  const { data, error } = await supabase.auth.signUp({
     email,
-    password
+    password,
   });
 
   if (error) {
@@ -45,12 +26,46 @@ const Login = () => {
     return;
   }
 
-  const accessToken = data.session.access_token;
+  const user = data.user;
 
-  // Store token (recommended)
-  localStorage.setItem('sb_token', accessToken);
+  if (!user) {
+    alert("Check your email to confirm signup");
+    return;
+  }
 
-  navigate('/Grocery');
+  // 🔥 INSERT PROFILE AFTER SIGNUP
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .insert([
+      {
+        id: user.id,
+        name,
+        email: user.email,
+      },
+    ]);
+
+  if (profileError) {
+    alert(profileError.message);
+    return;
+  }
+
+  alert("Signup successful. Please login.");
+  navigate("/login");
+};
+
+
+const handleLogin = async () => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  navigate("/grocery");
 };
 
 
@@ -66,9 +81,15 @@ const Login = () => {
           {action === "Sign Up" && (
             <div className="input">
               <PersonIcon className="icon" />
-              <input type="text" placeholder="Name" />
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
           )}
+
           <div className="input">
             <EmailIcon className="icon" />
             <input
@@ -97,7 +118,14 @@ const Login = () => {
             {/* Sign Up Button */}
             <div
               className={`submit ${action === "Sign Up" ? "":"inactive"}`}
-              onClick={() => setAction("Sign Up")}
+              onClick={() => {
+                if (action === "Sign Up") {
+                  handleSignUp();
+                } else {
+                  setAction("Sign Up");
+                }
+              }}
+
             >
               Sign Up
             </div>

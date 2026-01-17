@@ -7,9 +7,12 @@ const DashboardLayout = () => {
   return (
     <>
       <Topbar />
-      <Header/>
-      <Navbar/>
-      <Outlet />
+      <Header />
+      <Navbar />
+
+      <main style={{ paddingTop: "170px" }}>
+        <Outlet />
+      </main>
     </>
   );
 };

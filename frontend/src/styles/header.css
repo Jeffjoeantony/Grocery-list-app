@@ -1,23 +1,24 @@
 .header {
-    /* position: fixed;  */
-    top: 0;
-    left: 0;
-    /* width: 100vw; */
-    background: #fff;
-    border-bottom: 1px solid #eee;
-    width: 100%;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
 }
 
 .header-container {
-    width: 100%;
-    margin: auto;
-    padding: 15px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 12px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
 }
+
 
 .logo {
     display: flex;
