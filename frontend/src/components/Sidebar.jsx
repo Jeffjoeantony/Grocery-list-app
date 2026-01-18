@@ -2,6 +2,8 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/sidebar.css";
 import { Person2Outlined } from "@mui/icons-material";
+import { HomeOutlined } from "@mui/icons-material";
+import { ShoppingCartOutlined } from "@mui/icons-material";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? "icon-btn active" : "icon-btn")}
               title="Dashboard"
             >
-              <span className="icon">🏠</span>
+              <span className="icon"><HomeOutlined/></span>
             </NavLink>
           </li>
 
@@ -44,15 +46,13 @@ const Sidebar = () => {
               className={({ isActive }) => (isActive ? "icon-btn active" : "icon-btn")}
               title="Products"
             >
-              <span className="icon">🛒</span>
+              <span className="icon"><ShoppingCartOutlined/></span>
             </NavLink>
           </li>
 
-          {/* Add more menu items here as needed */}
         </ul>
       </nav>
 
-      {/* Bottom area - fixed to the bottom of the sidebar */}
       <div className="sidebar-bottom">
         <button
           type="button"

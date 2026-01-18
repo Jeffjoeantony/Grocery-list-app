@@ -14,60 +14,47 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-
   const handleSignup = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
+    if (!name || !email || !password) {
+      alert("All fields are required");
+      return;
+    }
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-  const user = data.user;
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
-  if (!user) {
-    alert("Check your email to confirm signup");
-    return;
-  }
-
-  // 🔥 INSERT PROFILE AFTER SIGNUP
-  const { error: profileError } = await supabase
-    .from("profiles")
-    .insert([
-      {
-        id: user.id,
+    if (data.user) {
+      await supabase.from("profiles").insert({
+        id: data.user.id,
         name,
-        email: user.email,
-      },
-    ]);
+        email,
+      });
+    }
 
-  if (profileError) {
-    alert(profileError.message);
-    return;
-  }
+    alert("Signup successful! Check your email and login.");
+    setAction("Login");
+  };
 
-  alert("Signup successful. Please login.");
-  navigate("/login");
-};
+  const handleLogin = async () => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
-const handleLogin = async () => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  navigate("/grocery");
-};
-
+    navigate("/grocery");
+  };
 
   return (
     <div className="login-wrapper">
@@ -76,8 +63,8 @@ const handleLogin = async () => {
           <div className="text">{action}</div>
           <div className="underline"></div>
         </div>
+
         <div className="inputs">
-          {/* Name field only for Sign Up */}
           {action === "Sign Up" && (
             <div className="input">
               <PersonIcon className="icon" />
@@ -99,6 +86,7 @@ const handleLogin = async () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
           <div className="input">
             <VisibilityIcon className="icon" />
             <input
@@ -108,37 +96,28 @@ const handleLogin = async () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {/* Forgot password only for Login */}
+
           {action === "Login" && (
             <div className="forgot-password">
               Forgot password? <span>Click here</span>
             </div>
           )}
-          <div className="submit-container">
-            {/* Sign Up Button */}
-            <div
-              className={`submit ${action === "Sign Up" ? "":"inactive"}`}
-              onClick={() => {
-                if (action === "Sign Up") {
-                  handleSignUp();
-                } else {
-                  setAction("Sign Up");
-                }
-              }}
 
+          <div className="submit-container">
+            <div
+              className={`submit ${action === "Sign Up" ? "" : "inactive"}`}
+              onClick={() =>
+                action === "Sign Up" ? handleSignup() : setAction("Sign Up")
+              }
             >
               Sign Up
             </div>
-            {/* Login Button */}
+
             <div
-              className={`submit ${action === "Login"?"":"inactive"}`}
-              onClick={() => {
-                if (action === "Login") {
-                  handleLogin();
-                } else {
-                  setAction("Login");
-                }
-              }}
+              className={`submit ${action === "Login" ? "" : "inactive"}`}
+              onClick={() =>
+                action === "Login" ? handleLogin() : setAction("Login")
+              }
             >
               Login
             </div>
