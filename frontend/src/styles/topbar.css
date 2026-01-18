@@ -1,12 +1,14 @@
 .topbar {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
+  height: 40px;           /* define height */
   background: #f8f8f8;
   border-bottom: 1px solid #eee;
-  z-index: 1100;
-  font-size: 13px;
+  z-index: 3000;
 }
+
 
 .topbar-container {
   max-width: 1300px;

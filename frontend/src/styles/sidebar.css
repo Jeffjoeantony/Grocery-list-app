@@ -1,0 +1,111 @@
+:root {
+  --sidebar-width: 72px; /* compact width */
+  --topbar-height: 64px; /* adjust if your Topbar has different height */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #ececec;
+  --accent: #39b54a;
+  --icon-size: 22px;
+}
+
+
+
+.sidebar {
+  position: fixed;
+  top: var(--topbar-height);
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  padding: 12px 8px;
+  overflow-y: auto;
+  z-index: 50;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 0 10px 0;
+}
+
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.logo {
+  font-weight: 800;
+  color: #0b6a4a; /* small brand color */
+  font-size: 18px;
+}
+
+.sidebar-divider {
+  width: 28px;
+  height: 1px;
+  background: #efefef;
+  margin: 8px 0 14px 0;
+}
+
+.sidebar-nav {
+  width: 100%;
+  flex: 1;
+}
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  text-decoration: none;
+  font-size: var(--icon-size);
+  transition: background 120ms ease, transform 120ms ease;
+  position: relative;
+}
+.icon-btn .icon {
+  display: inline-block;
+  line-height: 1;
+}
+
+.icon-btn:hover {
+  background: rgba(0,0,0,0.04);
+  transform: translateY(-1px);
+}
+
+.icon-btn.active {
+  background: rgba(57,181,74,0.12);
+  color: var(--accent);
+  box-shadow: 0 6px 14px rgba(57,181,74,0.06);
+  transform: translateY(0);
+  border-left: 3px solid transparent; 
+}
+
+.dashboard-main {
+  padding: 0px;
+  padding-top: calc(var(--topbar-height) + 12px);
+  box-sizing: border-box;
+  min-height: calc(100vh - var(--topbar-height));
+  background: #fff;
+}
+
