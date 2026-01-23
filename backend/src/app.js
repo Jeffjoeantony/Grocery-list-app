@@ -4,7 +4,7 @@ import cors from "cors";
 const app = express();
 
 app.use(cors());
-app.use(express.json()); // parse JSON body
+app.use(express.json()); 
 
 app.get("/", (req, res) => {
   res.json({
@@ -13,8 +13,5 @@ app.get("/", (req, res) => {
   });
 });
 
-/* ---------- Routes placeholder ---------- */
-// app.use("/api/items", itemRoutes);
-// app.use("/api/auth", authRoutes);
 
 export default app;

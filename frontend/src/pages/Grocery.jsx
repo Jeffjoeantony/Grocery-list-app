@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/grocery.css";
-import { addGroceryItem } from "../services/grocery.service";
+import { fetchGroceryItems, addGroceryItem, togglePurchased, deleteGroceryItem } from "../services/grocery.service";
 
 function Grocery() {
   const [items, setItems] = useState([]);
@@ -9,8 +9,21 @@ function Grocery() {
   const [quantity, setQuantity] = useState("");
   const [note, setNote] = useState("");
 
-  async function handleAdd(event) {
-    event.preventDefault();
+  useEffect(() => {
+    loadItems();
+  }, []);
+
+  async function loadItems() {
+    try {
+      const data = await fetchGroceryItems();
+      setItems(data);
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+
+  async function handleAdd(e) {
+    e.preventDefault();
 
     if (name.trim().length < 2) {
       alert("Item name must be at least 2 characters");
@@ -29,16 +42,12 @@ function Grocery() {
         note: note.trim(),
       });
 
-      const newItem = {
-        id: data?.[0]?.id ?? Date.now(), 
-        name: name.trim(),
-        quantity: quantity.trim(),
-        note: note.trim(),
-        purchased: false,
-        createdAt: Date.now(),
-      };
-
-      setItems((prev) => [newItem, ...prev]);
+      if (!data || !data.length) {
+        throw new Error("Insert failed");
+      }
+      
+      setItems((prev) => [data[0], ...prev]);
+      
 
       setName("");
       setQuantity("");
@@ -48,25 +57,39 @@ function Grocery() {
     }
   }
 
-  function togglePurchased(id) {
-    setItems((prevItems) =>
-      prevItems.map((it) =>
-        it.id === id ? { ...it, purchased: !it.purchased } : it
-      )
-    );
+  async function handleToggle(item) {
+    try {
+      await togglePurchased(item.id, item.purchased);
+
+      setItems((prev) =>
+        prev.map((it) =>
+          it.id === item.id
+            ? { ...it, purchased: !it.purchased }
+            : it
+        )
+      );
+    } catch (err) {
+      alert("Failed to update item");
+      console.error(err);
+    }
   }
 
-  function removeItem(id) {
-    setItems((prevItems) => prevItems.filter((it) => it.id !== id));
+  async function handleDelete(id) {
+    try {
+      await deleteGroceryItem(id);
+      setItems((prev) => prev.filter((it) => it.id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
   const total = items.length;
   const purchasedCount = items.filter((i) => i.purchased).length;
   const left = total - purchasedCount;
 
-  function formatTime(ms) {
+  function formatTime(ts) {
     try {
-      return new Date(ms).toLocaleString();
+      return new Date(ts).toLocaleString();
     } catch {
       return "";
     }
@@ -77,7 +100,6 @@ function Grocery() {
       <div className="grocery-header">
         <div className="grocery-header-inner">
           <h1 className="grocery-title">Grocery List</h1>
-
           <div className="grocery-stats">
             <span>Total: <strong>{total}</strong></span>
             <span>Purchased: <strong>{purchasedCount}</strong></span>
@@ -133,9 +155,7 @@ function Grocery() {
 
           <section className="items-list">
             {items.length === 0 ? (
-              <div className="empty">
-                No items yet. Add something using the form.
-              </div>
+              <div className="empty">No items yet.</div>
             ) : (
               <ul>
                 {items.map((it) => (
@@ -145,27 +165,24 @@ function Grocery() {
                   >
                     <div className="item-main">
                       <div className="item-name">{it.name}</div>
-                      {it.quantity && (
-                        <div className="item-qty">{it.quantity}</div>
-                      )}
-                      {it.note && (
-                        <div className="item-note">{it.note}</div>
-                      )}
+                      <div className="item-qty">{it.quantity}</div>
+                      {it.note && <div className="item-note">{it.note}</div>}
                       <div className="item-time">
-                        {formatTime(it.createdAt)}
+                        {formatTime(it.created_at)}
                       </div>
                     </div>
 
                     <div className="item-actions">
                       <button
                         className="small-btn"
-                        onClick={() => togglePurchased(it.id)}
+                        onClick={() => handleToggle(it)}
                       >
                         {it.purchased ? "Undo" : "Purchased"}
                       </button>
+
                       <button
                         className="small-btn danger"
-                        onClick={() => removeItem(it.id)}
+                        onClick={() => handleDelete(it.id)}
                       >
                         Remove
                       </button>
